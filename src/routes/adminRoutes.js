@@ -27,24 +27,6 @@ function verifyJWT(req, res, next) {
     });
 }
 
-// Rota TEMPORÁRIA para criar o PRIMEIRO usuário administrador (APENAS PARA INICIALIZAÇÃO!)
-router.post('/admin/criar-primeiro-admin', (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-        return res.status(400).json({ message: 'Username e password são obrigatórios.' });
-    }
-
-    User.criar({ username, password }, (err, userId) => {
-        if (err) {
-            console.error("Erro ao criar primeiro admin:", err);
-            return res.status(500).json({ message: 'Erro ao criar primeiro admin.' });
-        }
-        res.status(201).json({ message: 'Primeiro usuário administrador criado com sucesso!', userId: userId });
-    });
-});
-
-
 router.post('/admin/login', (req, res) => {
     const { username, password } = req.body;
 
