@@ -1,6 +1,6 @@
 // src/models/userModel.js
 const db = require('../database/db');
-const bcrypt = require('bcrypt'); // Vamos usar bcrypt para hash de senhas
+const bcrypt = require('bcrypt');
 
 const User = {
     buscarPorUsername: (username, callback) => {
@@ -10,13 +10,11 @@ const User = {
     criar: (userData, callback) => {
         const { username, password } = userData;
 
-        // 1. Hash da senha antes de salvar
         bcrypt.hash(password, 10, (err, hashedPassword) => { // 10 é o "salt rounds"
             if (err) {
                 return callback(err, null); // Retorna erro se falhar o hash
             }
 
-            // 2. Inserir o novo usuário no banco de dados com a senha hasheada
             db.run(
                 "INSERT INTO users (username, password) VALUES (?, ?)",
                 [username, hashedPassword],
@@ -28,9 +26,9 @@ const User = {
     },
 
     compararSenha: (passwordDigitada, passwordHashDoBanco, callback) => {
-        bcrypt.compare(passwordDigitada, passwordHashDoBanco, callback); // bcrypt.compare(senha_digitada, senha_hash, function(err, res) { ... });
+        bcrypt.compare(passwordDigitada, passwordHashDoBanco, callback);
     }
-    // ... você pode adicionar outras funções como atualizar informações do usuário, excluir usuário, etc.
+
 };
 
 module.exports = User;

@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
 const jwt = require('jsonwebtoken');
+const User = require('../models/userModel');
 
 const secretKey = 'chaveSuperSecretaParaJWT';
 
